@@ -19,6 +19,26 @@ config/icon="res://icon.svg"
 
 project/assembly_name="pruebas"
 
+[file_customization]
+
+folder_colors={
+"res://Assets/": "pink",
+"res://Assets/Fondos Parallax/": "purple",
+"res://Assets/Fondos Parallax/free-city-backgrounds-pixel-art/": "blue",
+"res://Assets/Sprites/": "purple",
+"res://Assets/Sprites/Interactuables/": "blue",
+"res://Assets/Sprites/Relámpago jr/": "blue",
+"res://Assets/Sprites/TileSet comprado/": "blue",
+"res://Assets/TileMaps/": "purple",
+"res://Assets/TileMaps/TileSet comprado/": "blue",
+"res://Core/": "pink",
+"res://Escenas/": "pink",
+"res://Escenas/Niveles/": "purple",
+"res://Scripts/": "pink",
+"res://UI/": "pink",
+"res://UI/HUD/": "purple"
+}
+
 [input]
 
 Saltar={

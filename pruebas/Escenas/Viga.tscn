@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cqe22cu3oso23"]
 
 [ext_resource type="Script" uid="uid://7n0fbuylpqha" path="res://Scripts/viga.gd" id="1_iq5f8"]
-[ext_resource type="Texture2D" uid="uid://1qmgjcbr2tgw" path="res://Sprites/viga.png" id="1_ogw0g"]
+[ext_resource type="Texture2D" uid="uid://1qmgjcbr2tgw" path="res://Assets/Sprites/Interactuables/viga.png" id="1_ogw0g"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iq5f8"]
 size = Vector2(11, 48)
