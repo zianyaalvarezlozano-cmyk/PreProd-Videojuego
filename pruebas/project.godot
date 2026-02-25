@@ -43,6 +43,7 @@ folder_colors={
 [global_group]
 
 enemigo=""
+jugador=""
 
 [input]
 

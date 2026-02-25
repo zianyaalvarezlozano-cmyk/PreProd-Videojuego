@@ -28,12 +28,12 @@ const VEL_DESLIZAMIENTO     = 50.0
 const REBOTE_PARED_X        = 180.0
 const TIEMPO_BLOQUEO_WALLJUMP = 0.25 
 
-const VEL_DIVE_X            = 350.0 
+const VEL_DIVE_X            = 200.0 
 const VEL_DIVE_Y            = -200.0 
 const PAUSA_ANTICIPACION     = 0.3 
 const VENTANA_SALTO_POTENTE  = 0.2 
-const TIEMPO_MAX_DASH        = 0.3 
-const TIEMPO_MAX_ROLL        = 0.3 
+const TIEMPO_MAX_DASH        = 0.3
+const TIEMPO_MAX_ROLL        = 0.2 
 const TIEMPO_MAX_PARRY       = 0.4 
 const TIEMPO_MAX_ATURDIDO    = 0.4 
 
@@ -168,8 +168,6 @@ func cambiar_estado(nuevo: Estado, forzar: bool = false) -> void:
 	
 	animaciones.speed_scale = 1.0
 	hitbox_ataque.disabled = true 
-	
-	# ¡MAGIA AQUÍ! Si salimos del Roll o Dash, volvemos a chocar con enemigos (Capa 3)
 	if estado_actual in [Estado.ROLL, Estado.DASH]:
 		set_collision_mask_value(3, true)
 		
@@ -181,7 +179,6 @@ func cambiar_estado(nuevo: Estado, forzar: bool = false) -> void:
 			dir_accion = -1 if animaciones.flip_h else 1
 			es_invulnerable = true
 			hitbox_ataque.disabled = true 
-			# ¡MAGIA AQUÍ! Apagamos la Capa 3 para que atravieses al enemigo como fantasma
 			set_collision_mask_value(3, false)
 			animaciones.play("Barrido") 
 		Estado.DASH:
@@ -199,7 +196,7 @@ func cambiar_estado(nuevo: Estado, forzar: bool = false) -> void:
 			velocity.x = -dir_accion * 200 
 			velocity.y = -150 
 			animaciones.play("IDLE") 
-			animaciones.modulate = Color(0.5, 0.5, 1.0) 
+			animaciones.modulate = Color(0.77, 0.065, 0.278, 1.0) 
 		Estado.GROUND_POUND:
 			timer_ground_pound = PAUSA_ANTICIPACION
 			recuperando_gp = false 
@@ -464,3 +461,14 @@ func _on_hitbox_ataque_body_entered(body):
 			if estado_actual == Estado.GROUND_POUND:
 				hitbox_ataque.disabled = true
 				cambiar_estado(Estado.SALTANDO, true)
+
+
+func _on_hurtbox_body_entered(body):
+	if body.is_in_group("enemigo"):
+
+		var esta_en_barrido = es_invulnerable
+		var esta_en_dash = (estado_actual == Estado.DASH)
+		
+		if not esta_en_barrido and not esta_en_dash:
+			print("¡Mi Hurtbox tocó al Dummy! Me muero AAA")
+			morir()

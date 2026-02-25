@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://djvssxftcut38"
-path="res://.godot/imported/pixil-frame-0.png-dc51a1ec600c31c9689af351b16bb478.ctex"
+uid="uid://bt6ugj6k375vj"
+path="res://.godot/imported/MonoProyectil.png-b85be2143edba41e791c03056ba6804a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Enemigos/pixil-frame-0.png"
-dest_files=["res://.godot/imported/pixil-frame-0.png-dc51a1ec600c31c9689af351b16bb478.ctex"]
+source_file="res://Assets/Sprites/Enemigos/MonoProyectil.png"
+dest_files=["res://.godot/imported/MonoProyectil.png-b85be2143edba41e791c03056ba6804a.ctex"]
 
 [params]
 

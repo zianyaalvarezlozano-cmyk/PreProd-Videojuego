@@ -1,7 +1,7 @@
-[gd_scene format=3 uid="uid://456s3m7fpe8j"]
+[gd_scene format=3 uid="uid://lxcme571bw5x"]
 
-[ext_resource type="Texture2D" uid="uid://djvssxftcut38" path="res://Assets/Sprites/Enemigos/MonoMalo.png" id="1_lrgmp"]
-[ext_resource type="Script" uid="uid://qcka7fyv56fy" path="res://Scripts/dummy.gd" id="1_suh7a"]
+[ext_resource type="Script" uid="uid://qcka7fyv56fy" path="res://Scripts/dummy.gd" id="1_4lgdf"]
+[ext_resource type="Texture2D" uid="uid://bt6ugj6k375vj" path="res://Assets/Sprites/Enemigos/MonoProyectil.png" id="2_4lgdf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_suh7a"]
 size = Vector2(13, 13)
@@ -9,22 +9,21 @@ size = Vector2(13, 13)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lrgmp"]
 size = Vector2(20, 18)
 
-[node name="Dummy" type="CharacterBody2D" unique_id=319906661 groups=["enemigo"]]
+[node name="EneProyec" type="CharacterBody2D" unique_id=319906661 groups=["enemigo"]]
 collision_layer = 4
-script = ExtResource("1_suh7a")
+script = ExtResource("1_4lgdf")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1254813886]
 position = Vector2(11, -10)
 scale = Vector2(0.43333334, 0.43333334)
-texture = ExtResource("1_lrgmp")
+texture = ExtResource("2_4lgdf")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=946408926]
 position = Vector2(10.5, -9.5)
 shape = SubResource("RectangleShape2D_suh7a")
 
 [node name="HitboxDaño" type="Area2D" parent="." unique_id=199283006 groups=["enemigo"]]
-collision_layer = 0
-collision_mask = 2
+collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxDaño" unique_id=695212716]
 position = Vector2(11, -10)
