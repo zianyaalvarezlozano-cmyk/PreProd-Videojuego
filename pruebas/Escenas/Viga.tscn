@@ -6,7 +6,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iq5f8"]
 size = Vector2(11, 48)
 
-[node name="StaticBody2D" type="StaticBody2D" unique_id=1177310494 groups=["rompible"]]
+[node name="Viga" type="StaticBody2D" unique_id=1177310494 groups=["rompible"]]
 script = ExtResource("1_iq5f8")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=612961721]

@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://bap73vm6qg80j"]
+
+[ext_resource type="Texture2D" uid="uid://b73hf75nfxrj8" path="res://Assets/Sprites/Interactuables/Teleport.png" id="1_ni26r"]
+[ext_resource type="Script" uid="uid://dyx5e7750h826" path="res://Scripts/teletransportador.gd" id="1_o3nrv"]
+[ext_resource type="FontFile" uid="uid://bvlgcbohr28tm" path="res://Assets/Fonts/DTM-Mono.otf" id="3_wuqv8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ni26r"]
+size = Vector2(22, 28.5)
+
+[node name="Teletransprotador" type="Area2D" unique_id=910624580]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_o3nrv")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=875659883]
+position = Vector2(12, -14.500001)
+scale = Vector2(1.4, 1.4499999)
+texture = ExtResource("1_ni26r")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1278729139]
+position = Vector2(12, -13.75)
+shape = SubResource("RectangleShape2D_ni26r")
+
+[node name="Label" type="Label" parent="." unique_id=872702993]
+offset_left = -8.0
+offset_top = -43.0
+offset_right = 32.0
+offset_bottom = -20.0
+theme_override_colors/font_color = Color(0.97698456, 0.40871933, 0.65710497, 1)
+theme_override_fonts/font = ExtResource("3_wuqv8")
+theme_override_font_sizes/font_size = 12
+horizontal_alignment = 1

@@ -8,12 +8,14 @@ signal juego_terminado
 # #########################################################
 enum Estado { IDLE, MOVIENDO, SALTANDO, CAYENDO, ATACANDO, ROLL, DASH, PARED, GROUND_POUND, DIVE, PARRY, ATURDIDO, MUERTO }
 
+#MOVILIDAD BÁSICA HORIZONTAL
 @export_group("Movimiento Horizontal")
 const VEL_NORMAL        = 100.0
 const VEL_CORRER        = 170.0
 const VEL_DASH          = 350.0 
 const VEL_ROLL          = 300.0 
 
+#MOVILIDAD BÁSICA VERTICAL
 @export_group("Salto y Gravedad")
 const FUERZA_SALTO       = -300.0
 const FUERZA_SALTO_SUPER = -380.0
@@ -22,12 +24,12 @@ const MULT_CORTE_SALTO   = 0.5
 const TIEMPO_COYOTE      = 0.12
 const TIEMPO_BUFFER_SALTO = 0.1
 
+#MOVIMIENTOS ESPECIALES
 @export_group("Especiales")
 const VEL_GROUND_POUND      = 600.0 
 const VEL_DESLIZAMIENTO     = 50.0
-const REBOTE_PARED_X        = 180.0
+const REBOTE_PARED_X        = 100.0
 const TIEMPO_BLOQUEO_WALLJUMP = 0.25 
-
 const VEL_DIVE_X            = 200.0 
 const VEL_DIVE_Y            = -200.0 
 const PAUSA_ANTICIPACION     = 0.3 
@@ -37,41 +39,52 @@ const TIEMPO_MAX_ROLL        = 0.2
 const TIEMPO_MAX_PARRY       = 0.4 
 const TIEMPO_MAX_ATURDIDO    = 0.4 
 
+#SISTEMA VIDA
 @export_group("Combate y Vida")
 @export var limite_caida_y : int = 200 
 
-# #########################################################
-# 2. VARIABLES DE CONTROL
-# #########################################################
-var estado_actual      : Estado = Estado.IDLE
+# =========================================================
+# 2.1 VARIABLES IMPORTANTES
+# =========================================================
+@export_group("Combate y Vida")
+@export var vida_maxima : int = 800
+@export var vida_actual : int = 800
 
+# =========================================================
+# 2.2 VARIABLES INTERNAS DE ESTADO
+# =========================================================
+
+# --- Control Principal ---
+var estado_actual      : Estado = Estado.IDLE
+var posicion_inicio    : Vector2 
+var mask_original      : int
+var esperando_reinicio : bool = false 
+var dir_accion         : float = 0.0 
+
+# --- Entradas (Inputs) ---
+var input_dir   : float = 0.0
+var input_corre : bool  = false
+
+# --- Temporizadores de Físicas ---
 var timer_super_salto  : float = 0.0
 var timer_ground_pound : float = 0.0
 var timer_wall_jump    : float = 0.0 
 var coyote_timer       : float = 0.0
 var jump_buffer_timer  : float = 0.0
 
-var tiempo_dash_actual = 0.0   
-var tiempo_roll_actual = 0.0 
-var tiempo_parry_actual = 0.0
-var tiempo_aturdido_actual = 0.0
+# --- Temporizadores de Habilidades ---
+var tiempo_dash_actual     : float = 0.0   
+var tiempo_roll_actual     : float = 0.0 
+var tiempo_parry_actual    : float = 0.0
+var tiempo_aturdido_actual : float = 0.0
 
-var es_salto_potenciado: bool = false
-var puedo_hacer_dive   : bool = true 
-var bloqueo_dash       = false 
-var bloqueo_roll       = false 
-var recuperando_gp     : bool = false    
-var esperando_reinicio : bool = false 
-var dir_accion         : float = 0.0 
-
-var input_dir   : float = 0.0
-var input_corre : bool  = false
-
-var vida_maxima : int = 800
-var vida_actual : int = 800
-var es_invulnerable : bool = false
-var posicion_inicio : Vector2 
-var mask_original : int
+# --- Banderas Condicionales (Flags) ---
+var es_salto_potenciado : bool = false
+var puedo_hacer_dive    : bool = true 
+var bloqueo_dash        : bool = false 
+var bloqueo_roll        : bool = false 
+var recuperando_gp      : bool = false    
+var es_invulnerable     : bool = false
 
 @onready var animaciones = $AnimatedSprite2D
 @onready var hitbox_ataque = $HitboxAtaque/CollisionShape2D

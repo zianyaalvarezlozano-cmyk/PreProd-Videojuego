@@ -25,6 +25,7 @@ folder_colors={
 "res://Assets/": "pink",
 "res://Assets/Fondos Parallax/": "purple",
 "res://Assets/Fondos Parallax/free-city-backgrounds-pixel-art/": "blue",
+"res://Assets/Fonts/": "purple",
 "res://Assets/Sprites/": "purple",
 "res://Assets/Sprites/Enemigos/": "blue",
 "res://Assets/Sprites/Interactuables/": "blue",

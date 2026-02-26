@@ -740,19 +740,19 @@ tile_set = SubResource("TileSet_5xvgr")
 [node name="Dummy" parent="." unique_id=319906661 instance=ExtResource("3_2fsvv")]
 position = Vector2(287, 1)
 
-[node name="StaticBody2D" parent="." unique_id=1177310494 instance=ExtResource("4_5xvgr")]
+[node name="Viga" parent="." unique_id=1177310494 instance=ExtResource("4_5xvgr")]
 position = Vector2(236, -37)
 rotation = 1.5707964
 
-[node name="StaticBody2D2" parent="." unique_id=879077220 instance=ExtResource("4_5xvgr")]
+[node name="Viga2" parent="." unique_id=879077220 instance=ExtResource("4_5xvgr")]
 position = Vector2(235, -20)
 rotation = 1.5707964
 
-[node name="StaticBody2D3" parent="." unique_id=227173118 instance=ExtResource("4_5xvgr")]
+[node name="Viga3" parent="." unique_id=227173118 instance=ExtResource("4_5xvgr")]
 position = Vector2(234, -2)
 rotation = 1.5707964
 
-[node name="StaticBody2D4" parent="." unique_id=1082884470 instance=ExtResource("4_5xvgr")]
+[node name="Viga4" parent="." unique_id=1082884470 instance=ExtResource("4_5xvgr")]
 position = Vector2(235, 16)
 rotation = 1.5707964
 
