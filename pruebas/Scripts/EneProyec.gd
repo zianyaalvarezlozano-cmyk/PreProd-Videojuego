@@ -2,10 +2,12 @@ extends CharacterBody2D
 
 const GRAVEDAD = 980.0
 
+@export_group("Combate y Visión")
 @export var escena_bala : PackedScene
 @export var tiempo_disparo: float = 2.0
-var timer_disparo: float = 0.0
+@export var radio_deteccion: float = 180.0 #
 
+var timer_disparo: float = 0.0
 var jugador_referencia : Node2D
 
 func _ready():
@@ -21,10 +23,20 @@ func _physics_process(delta):
 		velocity.y += GRAVEDAD * delta
 	move_and_slide()
 	
-	timer_disparo += delta
-	if timer_disparo >= tiempo_disparo:
-		disparar()
-		timer_disparo = 0.0
+	# ==========================================
+	# RADAR DE VISIÓN
+	# ==========================================
+	if jugador_referencia and is_instance_valid(jugador_referencia):
+		
+		var distancia_al_jugador = global_position.distance_to(jugador_referencia.global_position)
+		
+		if distancia_al_jugador <= radio_deteccion:
+			timer_disparo += delta
+			if timer_disparo >= tiempo_disparo:
+				disparar()
+				timer_disparo = 0.0
+		else:
+			timer_disparo = 0.0
 
 func disparar():
 	if escena_bala:
@@ -35,7 +47,7 @@ func disparar():
 		# ==========================================
 		# APUNTADO
 		# ==========================================
-		if jugador_referencia:
+		if jugador_referencia and is_instance_valid(jugador_referencia):
 			var direccion_apuntado = (jugador_referencia.global_position - global_position).normalized()
 			nueva_bala.direccion = direccion_apuntado
 		else:
@@ -44,5 +56,5 @@ func disparar():
 		print("No pusiste la escena de bala en el enemigo.")
 
 func morir():
-	print("¡Enemigo pryectil muerto")
+	print("¡Enemigo proyectil muerto!")
 	queue_free()

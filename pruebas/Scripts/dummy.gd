@@ -69,9 +69,8 @@ func _on_hitbox_daño_body_entered(body):
 		if "estado_actual" in body and "Estado" in body:
 			if body.estado_actual == body.Estado.DASH:
 				a_salvo = true 
-			if body.estado_actual == body.Estado.PARRY:
-				a_salvo = true 
+
 				
 		if not a_salvo:
-			print("¡El Dummy copió a la bala y te hizo Instant Kill!")
+			print("Dummy mató")
 			body.morir()
