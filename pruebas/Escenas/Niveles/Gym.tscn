@@ -813,15 +813,25 @@ position = Vector2(-252, 0)
 nodo_destino = NodePath("../Dash")
 texto_puerta = "Dash"
 
-[node name="Tp dash2" parent="." unique_id=889735133 node_paths=PackedStringArray("nodo_destino") instance=ExtResource("3_yuy67")]
+[node name="Tp melee" parent="." unique_id=889735133 node_paths=PackedStringArray("nodo_destino") instance=ExtResource("3_yuy67")]
 light_mask = 4
 visibility_layer = 4
 position = Vector2(-170, -1)
 nodo_destino = NodePath("../Combate")
 texto_puerta = "Combate"
 
+[node name="Tp proyectil" parent="." unique_id=879286659 node_paths=PackedStringArray("nodo_destino") instance=ExtResource("3_yuy67")]
+light_mask = 4
+visibility_layer = 4
+position = Vector2(-133, 0)
+nodo_destino = NodePath("../Combate")
+texto_puerta = "Proy"
+
 [node name="Dummy" parent="." unique_id=319906661 instance=ExtResource("4_proai")]
 position = Vector2(1799, 33)
+collision_layer = 4
+collision_mask = 1
 
 [node name="EneProyec" parent="." unique_id=495838927 instance=ExtResource("5_pwf46")]
 position = Vector2(2157, 34)
+escena_bala = null

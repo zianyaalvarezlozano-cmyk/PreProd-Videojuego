@@ -53,8 +53,8 @@ func disparar():
 		else:
 			nueva_bala.direccion = Vector2.LEFT 
 	else:
-		print("No pusiste la escena de bala en el enemigo.")
+		print("No pusiste la bala")
 
 func morir():
-	print("¡Enemigo proyectil muerto!")
+	print("ene proyectil muerto")
 	queue_free()

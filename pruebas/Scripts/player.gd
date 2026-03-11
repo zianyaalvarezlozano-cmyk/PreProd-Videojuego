@@ -10,8 +10,8 @@ enum Estado { IDLE, MOVIENDO, SALTANDO, CAYENDO, ATACANDO, ROLL, DASH, PARED, GR
 
 #MOVILIDAD BÁSICA HORIZONTAL
 @export_group("Movimiento Horizontal")
-const VEL_NORMAL        = 100.0
-const VEL_CORRER        = 170.0
+const VEL_NORMAL        = 135.0
+const VEL_CORRER        = 200.0
 const VEL_DASH          = 350.0 
 const VEL_ROLL          = 300.0 
 
@@ -26,9 +26,9 @@ const TIEMPO_BUFFER_SALTO = 0.1
 
 #MOVIMIENTOS ESPECIALES
 @export_group("Especiales")
-const VEL_GROUND_POUND      = 600.0 
+const VEL_GROUND_POUND      = 200.0 
 const VEL_DESLIZAMIENTO     = 50.0
-const REBOTE_PARED_X        = 100.0
+const REBOTE_PARED_X        = 220.0
 const TIEMPO_BLOQUEO_WALLJUMP = 0.5 
 const VEL_DIVE_X            = 200.0 
 const VEL_DIVE_Y            = -200.0 
@@ -144,20 +144,24 @@ func _physics_process(delta: float) -> void:
 		Estado.PARRY:         logica_parry(delta)
 		Estado.ATURDIDO:      logica_aturdido(delta)
 
-	move_and_slide()	
+	move_and_slide() 
+	
 	for i in get_slide_collision_count():
 		var choque = get_slide_collision(i).get_collider()
 		
 		if choque and choque.is_in_group("enemigo"):
 			var a_salvo = false
-			if es_invulnerable: a_salvo = true #barrido
-			if estado_actual == Estado.DASH: a_salvo = true # dash
-			if estado_actual == Estado.PARRY: a_salvo = true #parry
+			
+			if es_invulnerable: a_salvo = true 
+			if estado_actual == Estado.DASH: a_salvo = true 
+			if estado_actual == Estado.ROLL: a_salvo = true 
+			if estado_actual == Estado.PARRY: a_salvo = true
 			
 			if not a_salvo and estado_actual != Estado.MUERTO:
-				print("contacto enemigo")
+				print("player muerto")
 				morir()
 				break
+	# =========================================================
 	
 	verificar_inputs_especiales()
 

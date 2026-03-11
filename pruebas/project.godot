@@ -38,6 +38,7 @@ folder_colors={
 "res://Escenas/Niveles/": "purple",
 "res://Scripts/": "pink",
 "res://UI/": "pink",
+"res://UI/HUD Tuto/": "purple",
 "res://UI/HUD/": "purple"
 }
 

@@ -11,7 +11,7 @@ const GRAVEDAD = 980.0
 @export var velocidad_patrullaje: float = 25.0
 @export var velocidad_persecucion: float = 50.0
 
-# VARIABLES DIRECCIONAL
+# VARIABLES DIRECCIONALES
 var posicion_inicio: float
 var direccion_x: float = 1.0
 var persiguiendo: bool = false
@@ -59,6 +59,8 @@ func morir():
 	print("¡Dummy destruido!")
 	queue_free()
 
+
+
 func _on_hitbox_daño_body_entered(body):
 	if body.has_method("morir") and body.name != self.name:
 		
@@ -67,10 +69,9 @@ func _on_hitbox_daño_body_entered(body):
 		if "es_invulnerable" in body and body.es_invulnerable:
 			a_salvo = true 
 		if "estado_actual" in body and "Estado" in body:
-			if body.estado_actual == body.Estado.DASH:
-				a_salvo = true 
-
-				
+			if body.estado_actual == body.Estado.DASH or body.estado_actual == body.Estado.ROLL:
+				a_salvo = true
+		
 		if not a_salvo:
-			print("Dummy mató")
+			print("Dummy mató al jugador")
 			body.morir()

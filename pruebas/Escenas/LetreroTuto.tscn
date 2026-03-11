@@ -1,0 +1,126 @@
+[gd_scene format=3 uid="uid://df2nt30jyv00n"]
+
+[ext_resource type="Texture2D" uid="uid://8kkmvdeneic6" path="res://UI/HUD Tuto/Espacio.png" id="1_68qb2"]
+[ext_resource type="Script" uid="uid://b1cuxdupf2s8n" path="res://Scripts/LetreroTutorial.gd" id="1_htq5d"]
+[ext_resource type="Texture2D" uid="uid://bphbd7gvxw00v" path="res://UI/HUD Tuto/derecha.png" id="2_htq5d"]
+[ext_resource type="Texture2D" uid="uid://cppco8qt5li86" path="res://UI/HUD Tuto/izq.png" id="3_ptiwo"]
+[ext_resource type="Texture2D" uid="uid://coswi0jl2qavy" path="res://UI/HUD Tuto/Shift (2).png" id="4_ct23p"]
+[ext_resource type="Texture2D" uid="uid://dcq07arm2srvt" path="res://UI/HUD Tuto/boton c.png" id="5_1aafd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ybey6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s8bjx"]
+atlas = ExtResource("1_68qb2")
+region = Rect2(0, 0, 45, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bnraq"]
+atlas = ExtResource("1_68qb2")
+region = Rect2(45, 0, 45, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kkf4e"]
+atlas = ExtResource("2_htq5d")
+region = Rect2(0, 0, 16, 19)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8odrj"]
+atlas = ExtResource("2_htq5d")
+region = Rect2(16, 0, 16, 19)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_os3fw"]
+atlas = ExtResource("3_ptiwo")
+region = Rect2(0, 0, 16, 19)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ny2x8"]
+atlas = ExtResource("3_ptiwo")
+region = Rect2(16, 0, 16, 19)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lhiql"]
+atlas = ExtResource("4_ct23p")
+region = Rect2(0, 0, 32, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xus5q"]
+atlas = ExtResource("4_ct23p")
+region = Rect2(32, 0, 32, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qyehb"]
+atlas = ExtResource("5_1aafd")
+region = Rect2(0, 0, 16, 19)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nqd84"]
+atlas = ExtResource("5_1aafd")
+region = Rect2(16, 0, 16, 19)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ybey6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s8bjx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bnraq")
+}],
+"loop": true,
+"name": &"Espacio",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kkf4e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8odrj")
+}],
+"loop": true,
+"name": &"Flecha_Der",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_os3fw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ny2x8")
+}],
+"loop": true,
+"name": &"Flecha_Izq",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lhiql")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xus5q")
+}],
+"loop": true,
+"name": &"Shift",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qyehb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nqd84")
+}],
+"loop": true,
+"name": &"Tecla_C",
+"speed": 2.0
+}]
+
+[node name="LetreroTutorial" type="Area2D" unique_id=811581235]
+script = ExtResource("1_htq5d")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1998581448]
+shape = SubResource("RectangleShape2D_ybey6")
+disabled = true
+
+[node name="ContenedorVisual" type="Node2D" parent="." unique_id=1721372987]
+
+[node name="BotonAnimado" type="AnimatedSprite2D" parent="." unique_id=985592825]
+sprite_frames = SubResource("SpriteFrames_ybey6")
+animation = &"Tecla_C"
+frame_progress = 0.8217958
+
+[node name="Label" type="Label" parent="." unique_id=1782671457]
+offset_right = 40.0
+offset_bottom = 23.0
