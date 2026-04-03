@@ -6,14 +6,13 @@ signal juego_terminado
 # #########################################################
 # 1. ESTADOS Y CONFIGURACIÓN
 # #########################################################
-enum Estado { IDLE, MOVIENDO, SALTANDO, CAYENDO, ATACANDO, ROLL, DASH, PARED, GROUND_POUND, DIVE, PARRY, ATURDIDO, MUERTO }
+enum Estado { IDLE, MOVIENDO, SALTANDO, CAYENDO, ATACANDO, BARRIDO, PARED, GROUND_POUND, ATURDIDO, MUERTO }
 
 #MOVILIDAD BÁSICA HORIZONTAL
 @export_group("Movimiento Horizontal")
 const VEL_NORMAL        = 135.0
 const VEL_CORRER        = 200.0
-const VEL_DASH          = 350.0 
-const VEL_ROLL          = 300.0 
+const VEL_BARRIDO       = 350.0 
 
 #MOVILIDAD BÁSICA VERTICAL
 @export_group("Salto y Gravedad")
@@ -30,28 +29,19 @@ const VEL_GROUND_POUND      = 200.0
 const VEL_DESLIZAMIENTO     = 50.0
 const REBOTE_PARED_X        = 220.0
 const TIEMPO_BLOQUEO_WALLJUMP = 0.5 
-const VEL_DIVE_X            = 200.0 
-const VEL_DIVE_Y            = -200.0 
 const PAUSA_ANTICIPACION     = 0.3 
 const VENTANA_SALTO_POTENTE  = 0.2 
-const TIEMPO_MAX_DASH        = 0.3
-const TIEMPO_MAX_ROLL        = 0.2 
-const TIEMPO_MAX_PARRY       = 0.6 
+const TIEMPO_MAX_BARRIDO     = 0.3
 const TIEMPO_MAX_ATURDIDO    = 0.3 
 
 #SISTEMA VIDA
 @export_group("Combate y Vida")
 @export var limite_caida_y : int = 200 
-
-# =========================================================
-# 2.1 VARIABLES IMPORTANTES
-# =========================================================
-@export_group("Combate y Vida")
 @export var vida_maxima : int = 800
 @export var vida_actual : int = 800
 
 # =========================================================
-# 2.2 VARIABLES INTERNAS DE ESTADO
+# 2. VARIABLES INTERNAS DE ESTADO
 # =========================================================
 
 # --- Control Principal ---
@@ -73,16 +63,12 @@ var coyote_timer       : float = 0.0
 var jump_buffer_timer  : float = 0.0
 
 # --- Temporizadores de Habilidades ---
-var tiempo_dash_actual     : float = 0.0   
-var tiempo_roll_actual     : float = 0.0 
-var tiempo_parry_actual    : float = 0.0
+var tiempo_barrido_actual  : float = 0.0   
 var tiempo_aturdido_actual : float = 0.0
 
 # --- Banderas Condicionales (Flags) ---
 var es_salto_potenciado : bool = false
-var puedo_hacer_dive    : bool = true 
-var bloqueo_dash        : bool = false 
-var bloqueo_roll        : bool = false 
+var bloqueo_barrido     : bool = false 
 var recuperando_gp      : bool = false    
 var es_invulnerable     : bool = false
 
@@ -120,15 +106,11 @@ func _physics_process(delta: float) -> void:
 	procesar_gravedad(delta)
 	
 	if is_on_floor():
-		puedo_hacer_dive = true 
 		coyote_timer = TIEMPO_COYOTE
 		timer_wall_jump = 0 
 		
-		if estado_actual != Estado.DASH and not (Input.is_action_pressed("Ataque") and input_corre):
-			bloqueo_dash = false
-			
-		if estado_actual != Estado.ROLL and not (Input.is_action_pressed("ui_down") and input_corre):
-			bloqueo_roll = false
+		if estado_actual != Estado.BARRIDO and not (Input.is_action_pressed("Ataque") and input_corre):
+			bloqueo_barrido = false
 	
 	match estado_actual:
 		Estado.IDLE:          logica_idle(delta)
@@ -136,12 +118,9 @@ func _physics_process(delta: float) -> void:
 		Estado.SALTANDO, \
 		Estado.CAYENDO:       logica_aire(delta)
 		Estado.ATACANDO:      pass 
-		Estado.ROLL:          logica_roll(delta)
-		Estado.DASH:          logica_dash(delta)
+		Estado.BARRIDO:       logica_barrido(delta)
 		Estado.PARED:         logica_pared() 
 		Estado.GROUND_POUND:  logica_ground_pound(delta)
-		Estado.DIVE:          logica_dive()
-		Estado.PARRY:         logica_parry(delta)
 		Estado.ATURDIDO:      logica_aturdido(delta)
 
 	move_and_slide() 
@@ -153,9 +132,7 @@ func _physics_process(delta: float) -> void:
 			var a_salvo = false
 			
 			if es_invulnerable: a_salvo = true 
-			if estado_actual == Estado.DASH: a_salvo = true 
-			if estado_actual == Estado.ROLL: a_salvo = true 
-			if estado_actual == Estado.PARRY: a_salvo = true
+			if estado_actual == Estado.BARRIDO: a_salvo = true 
 			
 			if not a_salvo and estado_actual != Estado.MUERTO:
 				print("player muerto")
@@ -168,24 +145,15 @@ func _physics_process(delta: float) -> void:
 	var todas_las_balas = get_tree().get_nodes_in_group("bala")
 	for bala in todas_las_balas:
 		if global_position.distance_to(bala.global_position) < 5.0:
+			var a_salvo = false
+			if es_invulnerable: a_salvo = true 
+			if estado_actual == Estado.BARRIDO: a_salvo = true 
 			
-			if estado_actual == Estado.PARRY:
-				if not bala.fue_desviado:
-					print("Parry bien")
-					bala.direccion *= -1
-					bala.fue_desviado = true
-					bala.modulate = Color(0.617, 2.0, 0.566, 1.0)
-			
-			else:
-				var a_salvo = false
-				if es_invulnerable: a_salvo = true #Dodge Roll 
-				if estado_actual == Estado.DASH: a_salvo = true #Dash 
-				
-				if not a_salvo and not bala.fue_desviado and estado_actual != Estado.MUERTO:
-					print("impacto de bala")
-					bala.queue_free()
-					morir()
-					break
+			if not a_salvo and estado_actual != Estado.MUERTO:
+				print("impacto de bala")
+				bala.queue_free()
+				morir()
+				break
 
 func leer_inputs() -> void:
 	if estado_actual == Estado.MUERTO: 
@@ -210,39 +178,28 @@ func procesar_gravedad(delta):
 		if estado_actual == Estado.GROUND_POUND: 
 			return
 		else: 
-			var mult = 0.7 if estado_actual == Estado.DIVE else 1.0
-			velocity.y += (GRAVEDAD * mult) * delta
+			velocity.y += GRAVEDAD * delta
 
 func cambiar_estado(nuevo: Estado, forzar: bool = false) -> void:
 	if estado_actual == nuevo: return
 	
-	var es_accion = estado_actual in [Estado.ATACANDO, Estado.ROLL, Estado.DASH, Estado.DIVE, Estado.GROUND_POUND, Estado.PARRY, Estado.ATURDIDO, Estado.MUERTO]
+	var es_accion = estado_actual in [Estado.ATACANDO, Estado.BARRIDO, Estado.GROUND_POUND, Estado.ATURDIDO, Estado.MUERTO]
 	if es_accion and not forzar: return
 	
 	animaciones.speed_scale = 1.0
 	hitbox_ataque.disabled = true 
-	if estado_actual in [Estado.ROLL, Estado.DASH]:
+	
+	if estado_actual == Estado.BARRIDO:
 		set_collision_mask_value(3, true)
 		
 	estado_actual = nuevo
 	
 	match estado_actual:
-		Estado.ROLL:
-			tiempo_roll_actual = 0.0
-			dir_accion = -1 if animaciones.flip_h else 1
-			es_invulnerable = true
-			hitbox_ataque.disabled = true 
-			set_collision_mask_value(3, false)
-			animaciones.play("Barrido") 
-		Estado.DASH:
-			tiempo_dash_actual = 0.0
+		Estado.BARRIDO:
+			tiempo_barrido_actual = 0.0
 			dir_accion = -1 if animaciones.flip_h else 1
 			hitbox_ataque.disabled = false 
-			animaciones.play("Tacleado") 
-		Estado.PARRY:
-			tiempo_parry_actual = 0.0
-			velocity.x = 0
-			animaciones.play("Parry")
+			animaciones.play("Barrido") 
 		Estado.ATURDIDO:
 			tiempo_aturdido_actual = 0.0
 			hitbox_ataque.disabled = true
@@ -255,11 +212,6 @@ func cambiar_estado(nuevo: Estado, forzar: bool = false) -> void:
 			recuperando_gp = false 
 			velocity = Vector2.ZERO 
 			animaciones.play("Bomba") 
-		Estado.DIVE:
-			dir_accion = -1 if animaciones.flip_h else 1
-			velocity.x = dir_accion * VEL_DIVE_X
-			velocity.y = VEL_DIVE_Y
-			animaciones.play("Caida")
 		Estado.SALTANDO:
 			ejecutar_salto()
 		Estado.ATACANDO:  
@@ -270,11 +222,6 @@ func verificar_inputs_especiales() -> void:
 
 	if estado_actual == Estado.GROUND_POUND:
 		if recuperando_gp: return
-		if puedo_hacer_dive and (Input.is_action_just_pressed("Saltar") or Input.is_action_just_pressed("Correr")):
-			hitbox_ataque.disabled = true
-			puedo_hacer_dive = false
-			cambiar_estado(Estado.DIVE, true)
-			return
 
 	var es_libre = estado_actual in [Estado.IDLE, Estado.MOVIENDO, Estado.SALTANDO, Estado.CAYENDO]
 	if not es_libre: return
@@ -283,16 +230,8 @@ func verificar_inputs_especiales() -> void:
 		cambiar_estado(Estado.SALTANDO)
 		return
 
-	if is_on_floor() and Input.is_action_just_pressed("Ataque") and Input.is_action_pressed("ui_up"):
-		cambiar_estado(Estado.PARRY)
-		return
-
-	if is_on_floor() and input_corre and Input.is_action_pressed("ui_down") and not bloqueo_roll:
-		cambiar_estado(Estado.ROLL)
-		return
-
-	if is_on_floor() and input_corre and Input.is_action_just_pressed("Ataque") and not bloqueo_dash:
-		cambiar_estado(Estado.DASH)
+	if is_on_floor() and input_corre and Input.is_action_just_pressed("Ataque") and not bloqueo_barrido:
+		cambiar_estado(Estado.BARRIDO)
 		return
 
 	if Input.is_action_just_pressed("Ataque"):
@@ -367,32 +306,18 @@ func logica_aire(delta: float) -> void:
 		if (n.x < 0 and input_dir > 0) or (n.x > 0 and input_dir < 0): 
 			cambiar_estado(Estado.PARED, true)
 
-func logica_roll(delta: float) -> void:
-	velocity.x = dir_accion * VEL_ROLL
-	tiempo_roll_actual += delta
-	
-	if tiempo_roll_actual >= TIEMPO_MAX_ROLL or is_on_wall():
-		es_invulnerable = false
-		bloqueo_roll = true
-		cambiar_estado(Estado.MOVIENDO if input_dir != 0 else Estado.IDLE, true)
-
-func logica_dash(delta: float) -> void:
-	velocity.x = dir_accion * VEL_DASH
-	tiempo_dash_actual += delta
+func logica_barrido(delta: float) -> void:
+	velocity.x = dir_accion * VEL_BARRIDO
+	tiempo_barrido_actual += delta
 	
 	if is_on_wall():
 		cambiar_estado(Estado.ATURDIDO, true)
 		return
 		
-	if tiempo_dash_actual >= TIEMPO_MAX_DASH:
+	if tiempo_barrido_actual >= TIEMPO_MAX_BARRIDO:
 		hitbox_ataque.disabled = true
-		bloqueo_dash = true
+		bloqueo_barrido = true
 		cambiar_estado(Estado.MOVIENDO if input_dir != 0 else Estado.IDLE, true)
-
-func logica_parry(delta: float) -> void:
-	tiempo_parry_actual += delta
-	if tiempo_parry_actual >= TIEMPO_MAX_PARRY:
-		cambiar_estado(Estado.IDLE, true)
 
 func logica_aturdido(delta: float) -> void:
 	tiempo_aturdido_actual += delta
@@ -449,13 +374,6 @@ func logica_ground_pound(delta: float) -> void:
 			timer_super_salto = VENTANA_SALTO_POTENTE
 			cambiar_estado(Estado.IDLE, true)
 
-func logica_dive() -> void:
-	if is_on_floor(): 
-		cambiar_estado(Estado.IDLE, true)
-	elif is_on_wall():
-		velocity.x = -dir_accion * 50
-		cambiar_estado(Estado.CAYENDO, true)
-
 func iniciar_accion(anim: String) -> void:
 	animaciones.play(anim)
 	hitbox_ataque.disabled = false 
@@ -464,8 +382,7 @@ func iniciar_accion(anim: String) -> void:
 
 func recibir_daño(cantidad: int = 1, origen_daño_x: float = 0.0, es_proyectil: bool = false):
 	if es_invulnerable or estado_actual == Estado.MUERTO: return
-	if estado_actual == Estado.PARRY and es_proyectil: return
-	if estado_actual == Estado.DASH and not es_proyectil: return
+	if estado_actual == Estado.BARRIDO and not es_proyectil: return
 	morir()
 			
 func morir():
@@ -502,12 +419,12 @@ func _on_anim_finished():
 
 func _on_hitbox_ataque_body_entered(body):
 	if body.is_in_group("rompible"):
-		if estado_actual in [Estado.ATACANDO, Estado.DASH, Estado.GROUND_POUND]:
+		if estado_actual in [Estado.ATACANDO, Estado.BARRIDO, Estado.GROUND_POUND]:
 			if body.has_method("romper"): body.romper()
 			else: body.queue_free()
 				
 	elif body.is_in_group("enemigo"):
-		if estado_actual in [Estado.DASH, Estado.ATACANDO, Estado.GROUND_POUND]:
+		if estado_actual in [Estado.BARRIDO, Estado.ATACANDO, Estado.GROUND_POUND]:
 			if body.has_method("morir"): body.morir()
 			else: body.queue_free()
 			
@@ -515,13 +432,10 @@ func _on_hitbox_ataque_body_entered(body):
 				hitbox_ataque.disabled = true
 				cambiar_estado(Estado.SALTANDO, true)
 
-
 func _on_hurtbox_body_entered(body):
 	if body.is_in_group("enemigo"):
-
-		var esta_en_barrido = es_invulnerable
-		var esta_en_dash = (estado_actual == Estado.DASH)
+		var esta_en_barrido = (estado_actual == Estado.BARRIDO)
 		
-		if not esta_en_barrido and not esta_en_dash:
+		if not es_invulnerable and not esta_en_barrido:
 			print("¡Mi Hurtbox tocó al Dummy! Me muero AAA")
 			morir()

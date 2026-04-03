@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dy8aqb8qhqdqq"
-path="res://.godot/imported/agarrarrr.png-d5169da9df55c24fc74f5998df759f05.ctex"
+uid="uid://dudbrx0h85uel"
+path="res://.godot/imported/L_Muertez.png-193449a9c8f5771db3005d2c100d4b31.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Relámpago jr/agarrarrr.png"
-dest_files=["res://.godot/imported/agarrarrr.png-d5169da9df55c24fc74f5998df759f05.ctex"]
+source_file="res://Assets/Sprites/Player/Relámpago Jr/L_Muertez.png"
+dest_files=["res://.godot/imported/L_Muertez.png-193449a9c8f5771db3005d2c100d4b31.ctex"]
 
 [params]
 

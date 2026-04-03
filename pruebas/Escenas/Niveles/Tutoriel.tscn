@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://b1gd32a7bebhe" path="res://Assets/TileMaps/TileSet comprado/mp_cs_buildings.png" id="1_eta54"]
 [ext_resource type="PackedScene" uid="uid://ct57jbgxg13py" path="res://Escenas/player.tscn" id="2_ktres"]
-[ext_resource type="PackedScene" uid="uid://df2nt30jyv00n" path="res://Escenas/LetreroTuto.tscn" id="3_d327g"]
+[ext_resource type="PackedScene" uid="uid://df2nt30jyv00n" path="res://Escenas/Objetos/LetreroTuto.tscn" id="3_d327g"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2fsvv"]
 texture = ExtResource("1_eta54")
@@ -743,7 +743,7 @@ tile_map_data = PackedByteArray("AAAAAP//AAAPAAgAAAABAP//AAAOAAgAAAACAP//AAAOAAg
 tile_set = SubResource("TileSet_5xvgr")
 
 [node name="Player" parent="." unique_id=1066533691 instance=ExtResource("2_ktres")]
-position = Vector2(22, -15)
+position = Vector2(20, -21)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=851578528]
 position = Vector2(26, -22)

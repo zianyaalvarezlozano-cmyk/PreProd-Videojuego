@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d0h0wj732v88a"
-path="res://.godot/imported/L_Salto.png-d11b75dfa11392492042c01d39a1f7e0.ctex"
+uid="uid://b86j6bqghsh6f"
+path="res://.godot/imported/Aturdido_Full_Color.png-f1e591304dc41785eea01ac5d2c43c14.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Relámpago jr/L_Salto.png"
-dest_files=["res://.godot/imported/L_Salto.png-d11b75dfa11392492042c01d39a1f7e0.ctex"]
+source_file="res://Assets/Sprites/Player/Torbellino Jr/Aturdido_Full_Color.png"
+dest_files=["res://.godot/imported/Aturdido_Full_Color.png-f1e591304dc41785eea01ac5d2c43c14.ctex"]
 
 [params]
 

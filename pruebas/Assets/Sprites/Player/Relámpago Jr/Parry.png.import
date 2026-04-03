@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c7paga67l7qgv"
-path="res://.godot/imported/Barrido.png-c7c0c7c134baa2413b63da2fee33b3dc.ctex"
+uid="uid://l8oehxmonu3u"
+path="res://.godot/imported/Parry.png-aa63e51ceee9462482c4d8bb2ed43205.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Relámpago jr/Barrido.png"
-dest_files=["res://.godot/imported/Barrido.png-c7c0c7c134baa2413b63da2fee33b3dc.ctex"]
+source_file="res://Assets/Sprites/Player/Relámpago Jr/Parry.png"
+dest_files=["res://.godot/imported/Parry.png-aa63e51ceee9462482c4d8bb2ed43205.ctex"]
 
 [params]
 

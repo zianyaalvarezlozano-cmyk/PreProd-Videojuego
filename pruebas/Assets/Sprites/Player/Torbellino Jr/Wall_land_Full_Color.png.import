@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://de6fqgeb656jy"
-path="res://.godot/imported/L_PeterGriffinPose.png-3ebc91c7e67206ed1d517eda6c34c599.ctex"
+uid="uid://bop2qn416plr4"
+path="res://.godot/imported/Wall_land_Full_Color.png-63cf98ac70ab950700d2afd2b68daf5a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Relámpago jr/L_PeterGriffinPose.png"
-dest_files=["res://.godot/imported/L_PeterGriffinPose.png-3ebc91c7e67206ed1d517eda6c34c599.ctex"]
+source_file="res://Assets/Sprites/Player/Torbellino Jr/Wall_land_Full_Color.png"
+dest_files=["res://.godot/imported/Wall_land_Full_Color.png-63cf98ac70ab950700d2afd2b68daf5a.ctex"]
 
 [params]
 

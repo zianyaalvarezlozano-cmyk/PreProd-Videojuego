@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dci4shi0cebn8"
-path="res://.godot/imported/punchh.png-f7b99786bc25be749d8b6361b4dae6df.ctex"
+uid="uid://4klt12elw0pn"
+path="res://.godot/imported/caminandoing.png-5b2bd133d57d05af343f6c3c81d7d9d8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Relámpago jr/punchh.png"
-dest_files=["res://.godot/imported/punchh.png-f7b99786bc25be749d8b6361b4dae6df.ctex"]
+source_file="res://Assets/Sprites/Player/Relámpago Jr/caminandoing.png"
+dest_files=["res://.godot/imported/caminandoing.png-5b2bd133d57d05af343f6c3c81d7d9d8.ctex"]
 
 [params]
 

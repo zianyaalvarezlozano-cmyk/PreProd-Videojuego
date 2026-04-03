@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bib3fqma7a1ej"
-path="res://.godot/imported/idle.png-dc0813e3831b4f18878e59c2f9aa37ba.ctex"
+uid="uid://bwqujerg3qifl"
+path="res://.godot/imported/tacleo.png-65953a5d155f8a47e93caecb220f39e4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Relámpago jr/idle.png"
-dest_files=["res://.godot/imported/idle.png-dc0813e3831b4f18878e59c2f9aa37ba.ctex"]
+source_file="res://Assets/Sprites/Player/Relámpago Jr/tacleo.png"
+dest_files=["res://.godot/imported/tacleo.png-65953a5d155f8a47e93caecb220f39e4.ctex"]
 
 [params]
 

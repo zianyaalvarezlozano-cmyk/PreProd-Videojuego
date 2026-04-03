@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dudbrx0h85uel"
-path="res://.godot/imported/L_Muertez.png-49484af797e6b997b629d03566db4a7d.ctex"
+uid="uid://de6fqgeb656jy"
+path="res://.godot/imported/L_PeterGriffinPose.png-1e5147428eae2617eaa71b5a117f427e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Relámpago jr/L_Muertez.png"
-dest_files=["res://.godot/imported/L_Muertez.png-49484af797e6b997b629d03566db4a7d.ctex"]
+source_file="res://Assets/Sprites/Player/Relámpago Jr/L_PeterGriffinPose.png"
+dest_files=["res://.godot/imported/L_PeterGriffinPose.png-1e5147428eae2617eaa71b5a117f427e.ctex"]
 
 [params]
 

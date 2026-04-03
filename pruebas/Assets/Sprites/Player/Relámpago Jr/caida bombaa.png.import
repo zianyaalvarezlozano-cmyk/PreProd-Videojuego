@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://4klt12elw0pn"
-path="res://.godot/imported/caminandoing.png-53b03c517e59210d3018e047542d7a3c.ctex"
+uid="uid://kxauqbmo2136"
+path="res://.godot/imported/caida bombaa.png-80a3df19888619c9e604e4129fa5db89.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Relámpago jr/caminandoing.png"
-dest_files=["res://.godot/imported/caminandoing.png-53b03c517e59210d3018e047542d7a3c.ctex"]
+source_file="res://Assets/Sprites/Player/Relámpago Jr/caida bombaa.png"
+dest_files=["res://.godot/imported/caida bombaa.png-80a3df19888619c9e604e4129fa5db89.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bwqujerg3qifl"
-path="res://.godot/imported/tacleo.png-f2068831c8d48d3bf868b8469df32cea.ctex"
+uid="uid://ca7fqx7u2kude"
+path="res://.godot/imported/Slide_Full_Color_.png-e50d03c1a08cb2142be8ef722e4ae1d0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Relámpago jr/tacleo.png"
-dest_files=["res://.godot/imported/tacleo.png-f2068831c8d48d3bf868b8469df32cea.ctex"]
+source_file="res://Assets/Sprites/Player/Torbellino Jr/Slide_Full_Color_.png"
+dest_files=["res://.godot/imported/Slide_Full_Color_.png-e50d03c1a08cb2142be8ef722e4ae1d0.ctex"]
 
 [params]
 

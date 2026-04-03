@@ -3,10 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://ct57jbgxg13py" path="res://Escenas/player.tscn" id="1_0d2wr"]
 [ext_resource type="Texture2D" uid="uid://b1gd32a7bebhe" path="res://Assets/TileMaps/TileSet comprado/mp_cs_buildings.png" id="2_nu1ho"]
 [ext_resource type="PackedScene" uid="uid://456s3m7fpe8j" path="res://Escenas/Dummy.tscn" id="3_2fsvv"]
-[ext_resource type="PackedScene" uid="uid://cqe22cu3oso23" path="res://Escenas/Viga.tscn" id="4_5xvgr"]
-[ext_resource type="PackedScene" uid="uid://lxcme571bw5x" path="res://Escenas/EneProyec.tscn" id="5_vlbdx"]
-[ext_resource type="Script" uid="uid://csg2hgr4cddad" path="res://Scripts/EneProyec.gd" id="6_3y6rs"]
-[ext_resource type="PackedScene" uid="uid://ly2bddmd8sv2" path="res://Escenas/bala.tscn" id="7_apdj3"]
+[ext_resource type="PackedScene" uid="uid://cqe22cu3oso23" path="res://Escenas/Objetos/Viga.tscn" id="4_5xvgr"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2fsvv"]
 texture = ExtResource("2_nu1ho")
@@ -725,7 +722,7 @@ sources/0 = SubResource("TileSetAtlasSource_2fsvv")
 [node name="DEMO" type="Node2D" unique_id=297642043]
 
 [node name="Player" parent="." unique_id=1066533691 instance=ExtResource("1_0d2wr")]
-position = Vector2(43, -4)
+position = Vector2(41, -7)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=639585039]
 position = Vector2(9, -22)
@@ -738,7 +735,7 @@ tile_map_data = PackedByteArray("AAAAAAAAAAAMAAgAAAABAAAAAAAOAAgAAAACAAAAAAAPAAg
 tile_set = SubResource("TileSet_5xvgr")
 
 [node name="Dummy" parent="." unique_id=319906661 instance=ExtResource("3_2fsvv")]
-position = Vector2(287, 1)
+position = Vector2(126, 1)
 
 [node name="Viga" parent="." unique_id=1177310494 instance=ExtResource("4_5xvgr")]
 position = Vector2(236, -37)
@@ -761,9 +758,3 @@ position = Vector2(320, -1)
 
 [node name="Dummy3" parent="." unique_id=776092356 instance=ExtResource("3_2fsvv")]
 position = Vector2(501, -2)
-
-[node name="EneProyec" parent="." unique_id=269725602 instance=ExtResource("5_vlbdx")]
-position = Vector2(141, -12)
-script = ExtResource("6_3y6rs")
-escena_bala = ExtResource("7_apdj3")
-tiempo_disparo = 2.0

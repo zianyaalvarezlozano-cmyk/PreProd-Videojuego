@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://csg2hgr4cddad" path="res://Scripts/EneProyec.gd" id="1_4lgdf"]
 [ext_resource type="Texture2D" uid="uid://bt6ugj6k375vj" path="res://Assets/Sprites/Enemigos/MonoProyectil.png" id="2_4lgdf"]
-[ext_resource type="PackedScene" uid="uid://ly2bddmd8sv2" path="res://Escenas/bala.tscn" id="2_caimr"]
+[ext_resource type="PackedScene" uid="uid://ly2bddmd8sv2" path="res://Escenas/Objetos/bala.tscn" id="2_caimr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_suh7a"]
 size = Vector2(13, 13)

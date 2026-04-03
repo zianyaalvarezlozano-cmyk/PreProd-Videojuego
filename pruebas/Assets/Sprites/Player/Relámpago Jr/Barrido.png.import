@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://kxauqbmo2136"
-path="res://.godot/imported/caida bombaa.png-8d60fe1e3a39cb47b10c86e4107325da.ctex"
+uid="uid://c7paga67l7qgv"
+path="res://.godot/imported/Barrido.png-37d47c351ba45b3fdbc36b8451612fba.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Relámpago jr/caida bombaa.png"
-dest_files=["res://.godot/imported/caida bombaa.png-8d60fe1e3a39cb47b10c86e4107325da.ctex"]
+source_file="res://Assets/Sprites/Player/Relámpago Jr/Barrido.png"
+dest_files=["res://.godot/imported/Barrido.png-37d47c351ba45b3fdbc36b8451612fba.ctex"]
 
 [params]
 

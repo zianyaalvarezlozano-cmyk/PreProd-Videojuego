@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://l8oehxmonu3u"
-path="res://.godot/imported/Parry.png-822afefc68dd3bd1a6617149ad8cc5b7.ctex"
+uid="uid://d0yeowun75xk5"
+path="res://.godot/imported/Panzaso_Full_Color.png-ae8a2ccc2517ca5e2d0536462f818556.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Relámpago jr/Parry.png"
-dest_files=["res://.godot/imported/Parry.png-822afefc68dd3bd1a6617149ad8cc5b7.ctex"]
+source_file="res://Assets/Sprites/Player/Torbellino Jr/Panzaso_Full_Color.png"
+dest_files=["res://.godot/imported/Panzaso_Full_Color.png-ae8a2ccc2517ca5e2d0536462f818556.ctex"]
 
 [params]
 
