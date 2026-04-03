@@ -10,9 +10,8 @@ enum Estado { IDLE, MOVIENDO, SALTANDO, CAYENDO, ATACANDO, BARRIDO, PARED, GROUN
 
 #MOVILIDAD BÁSICA HORIZONTAL
 @export_group("Movimiento Horizontal")
-const VEL_NORMAL        = 135.0
-const VEL_CORRER        = 200.0
-const VEL_BARRIDO       = 350.0 
+const VEL_MOVIMIENTO    = 300.0 
+const VEL_BARRIDO       = 380.0 
 
 #MOVILIDAD BÁSICA VERTICAL
 @export_group("Salto y Gravedad")
@@ -27,12 +26,12 @@ const TIEMPO_BUFFER_SALTO = 0.1
 @export_group("Especiales")
 const VEL_GROUND_POUND      = 200.0 
 const VEL_DESLIZAMIENTO     = 50.0
-const REBOTE_PARED_X        = 220.0
+const REBOTE_PARED_X        = 230.0
 const TIEMPO_BLOQUEO_WALLJUMP = 0.5 
 const PAUSA_ANTICIPACION     = 0.3 
 const VENTANA_SALTO_POTENTE  = 0.2 
 const TIEMPO_MAX_BARRIDO     = 0.3
-const TIEMPO_MAX_ATURDIDO    = 0.3 
+const TIEMPO_MAX_ATURDIDO    = 0.2
 
 #SISTEMA VIDA
 @export_group("Combate y Vida")
@@ -44,6 +43,15 @@ const TIEMPO_MAX_ATURDIDO    = 0.3
 # 2. VARIABLES INTERNAS DE ESTADO
 # =========================================================
 
+@onready var animaciones = $AnimatedSprite2D
+@onready var hitbox_ataque = $HitboxAtaque/CollisionShape2D
+
+# --- Cajas de Colisión Adaptables ---
+@onready var colision_normal = $ColisionNormal
+@onready var colision_barrido = $ColisionBarrido
+@onready var hurtbox_normal = $Hurtbox/HurtboxNormal
+@onready var hurtbox_barrido = $Hurtbox/HurtboxBarrido
+
 # --- Control Principal ---
 var estado_actual      : Estado = Estado.IDLE
 var posicion_inicio    : Vector2 
@@ -53,7 +61,6 @@ var dir_accion         : float = 0.0
 
 # --- Entradas (Inputs) ---
 var input_dir   : float = 0.0
-var input_corre : bool  = false
 
 # --- Temporizadores de Físicas ---
 var timer_super_salto  : float = 0.0
@@ -71,9 +78,6 @@ var es_salto_potenciado : bool = false
 var bloqueo_barrido     : bool = false 
 var recuperando_gp      : bool = false    
 var es_invulnerable     : bool = false
-
-@onready var animaciones = $AnimatedSprite2D
-@onready var hitbox_ataque = $HitboxAtaque/CollisionShape2D
 
 # #########################################################
 # 3. BUCLE PRINCIPAL
@@ -109,7 +113,8 @@ func _physics_process(delta: float) -> void:
 		coyote_timer = TIEMPO_COYOTE
 		timer_wall_jump = 0 
 		
-		if estado_actual != Estado.BARRIDO and not (Input.is_action_pressed("Ataque") and input_corre):
+		# Simplificado: Ya no evalúa input_corre, solo si soltaste el botón abajo
+		if estado_actual != Estado.BARRIDO and not Input.is_action_pressed("ui_down"):
 			bloqueo_barrido = false
 	
 	match estado_actual:
@@ -158,12 +163,11 @@ func _physics_process(delta: float) -> void:
 func leer_inputs() -> void:
 	if estado_actual == Estado.MUERTO: 
 		input_dir = 0
-		input_corre = false
 		return
 
 	var raw_dir = Input.get_axis("ui_left", "ui_right")
 	input_dir = raw_dir if abs(raw_dir) > 0.15 else 0.0
-	input_corre = Input.is_action_pressed("Correr")
+	
 	if Input.is_action_just_pressed("Saltar"):
 		jump_buffer_timer = TIEMPO_BUFFER_SALTO
 
@@ -189,8 +193,16 @@ func cambiar_estado(nuevo: Estado, forzar: bool = false) -> void:
 	animaciones.speed_scale = 1.0
 	hitbox_ataque.disabled = true 
 	
+	# ==========================================
+	# AL SALIR DEL BARRIDO: Restauramos las cajas normales
+	# ==========================================
 	if estado_actual == Estado.BARRIDO:
 		set_collision_mask_value(3, true)
+		es_invulnerable = false
+		colision_normal.set_deferred("disabled", false)
+		hurtbox_normal.set_deferred("disabled", false)
+		colision_barrido.set_deferred("disabled", true)
+		hurtbox_barrido.set_deferred("disabled", true)
 		
 	estado_actual = nuevo
 	
@@ -198,14 +210,25 @@ func cambiar_estado(nuevo: Estado, forzar: bool = false) -> void:
 		Estado.BARRIDO:
 			tiempo_barrido_actual = 0.0
 			dir_accion = -1 if animaciones.flip_h else 1
-			hitbox_ataque.disabled = false 
+			es_invulnerable = true
+			hitbox_ataque.disabled = true 
+			set_collision_mask_value(3, false)
 			animaciones.play("Barrido") 
+			
+			# ==========================================
+			# AL ENTRAR AL BARRIDO: Activamos las cajas chaparritas
+			# ==========================================
+			colision_normal.set_deferred("disabled", true)
+			hurtbox_normal.set_deferred("disabled", true)
+			colision_barrido.set_deferred("disabled", false)
+			hurtbox_barrido.set_deferred("disabled", false)
+			
 		Estado.ATURDIDO:
 			tiempo_aturdido_actual = 0.0
 			hitbox_ataque.disabled = true
 			velocity.x = -dir_accion * 200 
 			velocity.y = -150 
-			animaciones.play("IDLE") 
+			animaciones.play("Muerte") 
 			animaciones.modulate = Color(0.77, 0.065, 0.278, 1.0) 
 		Estado.GROUND_POUND:
 			timer_ground_pound = PAUSA_ANTICIPACION
@@ -230,7 +253,8 @@ func verificar_inputs_especiales() -> void:
 		cambiar_estado(Estado.SALTANDO)
 		return
 
-	if is_on_floor() and input_corre and Input.is_action_just_pressed("Ataque") and not bloqueo_barrido:
+	# Simplificado: Solo requieres estar en el suelo y apretar Abajo
+	if is_on_floor() and Input.is_action_just_pressed("ui_down") and not bloqueo_barrido:
 		cambiar_estado(Estado.BARRIDO)
 		return
 
@@ -266,11 +290,8 @@ func logica_idle(delta: float):
 		cambiar_estado(Estado.MOVIENDO)
 
 @warning_ignore("unused_parameter")
-func logica_movimiento(delta: float) -> void:
-	var v_objetivo = VEL_CORRER if input_corre else VEL_NORMAL
-	animaciones.speed_scale = 1.5 if input_corre else 1.0
-	
-	velocity.x = input_dir * v_objetivo
+func logica_movimiento(delta: float) -> void: 
+	velocity.x = input_dir * VEL_MOVIMIENTO
 	
 	animaciones.play("Caminado")
 	if input_dir != 0: animaciones.flip_h = (input_dir < 0)
@@ -284,8 +305,7 @@ func logica_aire(delta: float) -> void:
 		animaciones.play("Saltar") 
 		animaciones.flip_h = (velocity.x < 0)
 	else:
-		var v_objetivo = VEL_CORRER if input_corre else VEL_NORMAL
-		velocity.x = input_dir * v_objetivo
+		velocity.x = input_dir * VEL_MOVIMIENTO
 		
 		if input_dir != 0:
 			animaciones.flip_h = (input_dir < 0)
@@ -310,12 +330,8 @@ func logica_barrido(delta: float) -> void:
 	velocity.x = dir_accion * VEL_BARRIDO
 	tiempo_barrido_actual += delta
 	
-	if is_on_wall():
-		cambiar_estado(Estado.ATURDIDO, true)
-		return
-		
-	if tiempo_barrido_actual >= TIEMPO_MAX_BARRIDO:
-		hitbox_ataque.disabled = true
+	if tiempo_barrido_actual >= TIEMPO_MAX_BARRIDO or is_on_wall():
+		es_invulnerable = false
 		bloqueo_barrido = true
 		cambiar_estado(Estado.MOVIENDO if input_dir != 0 else Estado.IDLE, true)
 
@@ -419,12 +435,12 @@ func _on_anim_finished():
 
 func _on_hitbox_ataque_body_entered(body):
 	if body.is_in_group("rompible"):
-		if estado_actual in [Estado.ATACANDO, Estado.BARRIDO, Estado.GROUND_POUND]:
+		if estado_actual in [Estado.ATACANDO, Estado.GROUND_POUND]:
 			if body.has_method("romper"): body.romper()
 			else: body.queue_free()
 				
 	elif body.is_in_group("enemigo"):
-		if estado_actual in [Estado.BARRIDO, Estado.ATACANDO, Estado.GROUND_POUND]:
+		if estado_actual in [Estado.ATACANDO, Estado.GROUND_POUND]:
 			if body.has_method("morir"): body.morir()
 			else: body.queue_free()
 			
